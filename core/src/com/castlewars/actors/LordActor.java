@@ -6,8 +6,27 @@ package com.castlewars.actors;
 
 public class LordActor extends KnightActor {
 
+    public LordActor() {
+        super();
+    }
 
+    @Override
+    public double getDamage() {
+        return 0;
+    }
 
+    @Override
+    public double getAttack() {
+        return 10;
+    }
 
+    @Override
+    public double getSpeed() {
+        return 0;
+    }
 
+    @Override
+    public double getShield() {
+        return 100;
+    }
 }

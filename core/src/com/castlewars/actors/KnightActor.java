@@ -10,12 +10,15 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.castlewars.Constants;
+import com.castlewars.structural.decorator.ComponentDecorator;
+
+import java.awt.Component;
 
 /**
  * Created by Daniel Gutierrez on 7/05/2017.
  */
 
-public abstract class KnightActor extends Actor {
+public abstract class KnightActor extends ComponentDecorator {
 
     private Texture texture;
     private Texture attack;
@@ -27,8 +30,10 @@ public abstract class KnightActor extends Actor {
     private Fixture fixture;
     private boolean alive;
     private boolean attacking;
-    private int health;
-    private int damage;
+    private double health;
+    private double damage;
+    private double shield;
+    private double speed;
 
     private com.castlewars.actors.animations.Animation attackAnimation;
     private com.castlewars.actors.animations.Animation walkAnimation;
@@ -44,8 +49,10 @@ public abstract class KnightActor extends Actor {
         // Give it some shape.
         PolygonShape box = new PolygonShape();      // (1) Create the shape.
         box.setAsBox(0.5f, 0.5f);                   // (2) 1x1 meter box.
-        fixture = body.createFixture(box, 3);       // (3) Create the fixture.
-        fixture.setUserData("player");              // (4) Set the user data.
+
+
+//        fixture = body.createFixture(box, 3);       // (3) Create the fixture.
+//        fixture.setUserData("player");              // (4) Set the user data.
         box.dispose();                              // (5) Destroy the shape.
 
         setSize(Constants.PIXELS_IN_METER, Constants.PIXELS_IN_METER);
@@ -95,5 +102,8 @@ public abstract class KnightActor extends Actor {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
-    
+
+
+
+
 }

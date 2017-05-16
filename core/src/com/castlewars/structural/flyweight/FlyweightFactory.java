@@ -1,4 +1,4 @@
-package com.castlewars.actors.structural.flyweight;
+package com.castlewars.structural.flyweight;
 
 import com.castlewars.actors.KnightActor;
 import com.castlewars.creational.factory_chainofresponsability.ActorFactory;

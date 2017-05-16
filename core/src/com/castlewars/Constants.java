@@ -21,4 +21,9 @@ public class Constants {
 
     public static final float KNIGHT_SELECTION_RATIO = 1;
 
+    public static final double KNIGHT_DECORATOR_SHIELD = 1.3;
+    public static final double KNIGHT_DECORATOR_ATTACK = 1.5;
+    public static final double KNIGHT_DECORATOR_SPEED = 1.4;
+
+
 }
