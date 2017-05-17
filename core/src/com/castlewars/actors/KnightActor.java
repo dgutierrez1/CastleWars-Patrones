@@ -103,7 +103,10 @@ public abstract class KnightActor extends ComponentDecorator {
         this.alive = alive;
     }
 
-
+    @Override
+    public String mostrarCaracteristicas(){
+        return "ataque :"+getDamage()+" velocidad: "+getSpeed()+" escudo: "+getShield();
+    }
 
 
 }

@@ -12,10 +12,6 @@ public class DragonRiderActor extends KnightActor {
         return 0;
     }
 
-    @Override
-    public double getAttack() {
-        return 0;
-    }
 
     @Override
     public double getSpeed() {
@@ -25,5 +21,10 @@ public class DragonRiderActor extends KnightActor {
     @Override
     public double getShield() {
         return 0;
+    }
+
+    @Override
+    public String mostrarCaracteristicas() {
+        return null;
     }
 }

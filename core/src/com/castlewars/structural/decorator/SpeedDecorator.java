@@ -16,21 +16,20 @@ public class SpeedDecorator extends ActorDecorator {
 
     @Override
     public double getDamage() {
-        return 0;
+        return decorable.getDamage();
     }
 
-    @Override
-    public double getAttack() {
-        return 0;
-    }
+
 
     @Override
     public double getShield() {
-        return 0;
+        return decorable.getShield();
     }
+
+
 
     @Override
     public double getSpeed() {
-        return getDecorable().getSpeed()* Constants.KNIGHT_DECORATOR_SPEED;
+        return decorable.getSpeed()* Constants.KNIGHT_DECORATOR_SPEED;
     }
 }

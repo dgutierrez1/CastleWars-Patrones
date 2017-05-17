@@ -16,22 +16,20 @@ public class ShieldDecorator extends ActorDecorator {
 
     @Override
     public double getDamage() {
-        return 0;
+        return decorable.getDamage();
     }
 
-    @Override
-    public double getAttack() {
-        return 0;
-    }
+
 
     @Override
     public double getShield() {
-        return getDecorable().getShield()* Constants.KNIGHT_DECORATOR_SHIELD;
+        return decorable.getShield()* Constants.KNIGHT_DECORATOR_SHIELD;
     }
+
 
     @Override
     public double getSpeed() {
-        return 0;
+        return decorable.getSpeed();
     }
 
 

@@ -7,30 +7,27 @@ import com.castlewars.actors.KnightActor;
  * Created by Esteban Aguirre on 16/05/2017.
  */
 
-public class AttackDecorator extends ActorDecorator {
+public class DamageDecorator extends ActorDecorator {
 
-    public AttackDecorator(ComponentDecorator decorable) {
+    public DamageDecorator(ComponentDecorator decorable) {
         super(decorable);
     }
 
     @Override
     public double getDamage() {
-        return getDecorable().getDamage()*Constants.KNIGHT_DECORATOR_ATTACK;
+        return decorable.getDamage()*Constants.KNIGHT_DECORATOR_ATTACK;
     }
 
-    @Override
-    public double getAttack() {
-        return 0;
-    }
 
     @Override
     public double getShield() {
-        return 0;
+        return decorable.getShield();
     }
+
 
     @Override
     public double getSpeed() {
-        return 0;
+        return decorable.getSpeed();
     }
 
 

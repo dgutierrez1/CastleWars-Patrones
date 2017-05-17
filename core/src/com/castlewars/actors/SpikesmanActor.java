@@ -11,10 +11,6 @@ public class SpikesmanActor extends KnightActor {
         return 0;
     }
 
-    @Override
-    public double getAttack() {
-        return 0;
-    }
 
     @Override
     public double getSpeed() {
@@ -24,6 +20,11 @@ public class SpikesmanActor extends KnightActor {
     @Override
     public double getShield() {
         return 0;
+    }
+
+    @Override
+    public String mostrarCaracteristicas() {
+        return null;
     }
 
 }

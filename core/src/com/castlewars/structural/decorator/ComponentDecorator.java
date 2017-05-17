@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public abstract class ComponentDecorator extends Actor{
 
     public abstract double getDamage();
-    public abstract double getAttack();
     public abstract double getSpeed();
     public abstract double getShield();
+    public abstract String mostrarCaracteristicas();
 
 
 

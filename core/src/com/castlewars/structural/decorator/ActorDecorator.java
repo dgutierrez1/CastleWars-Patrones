@@ -8,7 +8,7 @@ import com.castlewars.actors.KnightActor;
 
 public abstract class ActorDecorator extends ComponentDecorator {
 
-private ComponentDecorator decorable;
+protected ComponentDecorator decorable;
 
 
     public ActorDecorator(ComponentDecorator decorable) {
@@ -24,6 +24,11 @@ private ComponentDecorator decorable;
     public void setDecorable(ComponentDecorator decorable) {
 
         this.decorable = decorable;
+    }
+
+    @Override
+    public String mostrarCaracteristicas() {
+        return null;
     }
 
 }

@@ -2,14 +2,15 @@ package com.castlewars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.castlewars.CastleWars;
+import com.castlewars.actors.KnightActor;
 import com.castlewars.actors.LordActor;
-import com.castlewars.structural.decorator.ActorDecorator;
 import com.castlewars.processors.InferiorProcessor;
-import com.castlewars.processors.Processor;
 import com.castlewars.processors.SuperiorProcessor;
-import com.castlewars.structural.decorator.AttackDecorator;
+import com.castlewars.structural.decorator.ActorDecorator;
+import com.castlewars.structural.decorator.DamageDecorator;
 import com.castlewars.structural.decorator.ComponentDecorator;
 import com.castlewars.structural.decorator.ShieldDecorator;
+import com.castlewars.structural.decorator.SpeedDecorator;
 
 /**
  * Created by Daniel Gutierrez on 8/05/2017.
@@ -50,14 +51,19 @@ public class PlayScreen extends GameScreenObserver {
             }else{
                 if(superiorCounter>0){
                     Gdx.app.log("DEPLOY", "SOLDIER WITH superior" +superiorCounter);
-                    ComponentDecorator soldado= new LordActor();
-                    Gdx.app.log("DEPLOY", "escudo normal"+soldado.getShield());
-                    soldado= new ShieldDecorator(soldado);
-                    //soldado= new AttackDecorator(soldado);
 
-                    Gdx.app.log("DEPLOY", "caracteristitcas soldado");
-                    Gdx.app.log("DEPLOY", "escudo"+soldado.getShield());
-                    Gdx.app.log("DEPLOY", "ataque"+soldado.getAttack());
+                    ComponentDecorator soldado= new LordActor();
+                    Gdx.app.log("DEPLOY", "caracteristicas"+soldado.mostrarCaracteristicas());
+
+                    ActorDecorator damageDecorador= new DamageDecorator(soldado);
+                    Gdx.app.log("DEPLOY", "ataque :"+damageDecorador.getDamage());
+
+                    ActorDecorator velocidadDecorador= new SpeedDecorator(soldado);
+                    Gdx.app.log("DEPLOY", "velocidad : "+velocidadDecorador.getSpeed());
+
+                    ActorDecorator escudoDecorador= new ShieldDecorator(soldado);
+                    Gdx.app.log("DEPLOY", "escudo : "+escudoDecorador.getShield());
+
                     superiorCounter = 0;
                 }
                 superiorPressed = false;

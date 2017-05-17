@@ -12,21 +12,20 @@ public class LordActor extends KnightActor {
 
     @Override
     public double getDamage() {
-        return 0;
+        return 30;
     }
 
-    @Override
-    public double getAttack() {
-        return 10;
-    }
 
     @Override
     public double getSpeed() {
-        return 0;
+        return 20;
     }
 
     @Override
     public double getShield() {
         return 100;
     }
+
+
+
 }
