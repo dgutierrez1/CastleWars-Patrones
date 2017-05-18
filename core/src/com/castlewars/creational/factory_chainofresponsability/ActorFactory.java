@@ -32,37 +32,37 @@ public abstract class ActorFactory {
 
 
     /*Metodo encargado de verificar si se puede crear el objeto en esta factory, sino lo delega a la siguiente*/
-    public KnightActor createActor(double counter, Vector2 position){
+    public KnightActor createActor(double counter, Vector2 position,String key){
         if((rangeStart <= counter && counter < rangeEnd) || nextFactory==null){
             Gdx.app.log("VERF", "Y position: "+position.y);
             Gdx.app.log("VERF", "height: "+Constants.HEIGHT/2);
 
             if((Constants.HEIGHT/2)>(position.y*Constants.PIXELS_IN_METER)){
-                return requestBuildInferior(counter, position);
+                return requestBuildInferior(counter, position, key);
             }else {
-                return requestBuildSuperior(counter, position);
+                return requestBuildSuperior(counter, position, key);
             }
         }else{
-            return nextFactory.createActor(counter, position);
+            return nextFactory.createActor(counter, position, key);
         }
     }
 
-    public KnightActor requestBuildSuperior(double counter, Vector2 pos) {
-        requestBuild(counter,pos);
+    public KnightActor requestBuildSuperior(double counter, Vector2 pos, String key) {
+        requestBuild(counter,pos,key);
         actorBuilder.setDirection(-(Constants.PLAYER_SPEED));
         Gdx.app.log("DEPLOY", "actor superior");
         return actorBuilder.getActor();
 
     }
 
-    public KnightActor requestBuildInferior(double counter, Vector2 pos) {
-        requestBuild(counter,pos);
+    public KnightActor requestBuildInferior(double counter, Vector2 pos, String key) {
+        requestBuild(counter,pos, key);
         actorBuilder.setDirection(Constants.PLAYER_SPEED);
         Gdx.app.log("DEPLOY", "actor inferior");
         return actorBuilder.getActor();
 
     }
-    public abstract void requestBuild(double counter, Vector2 pos) ;
+    public abstract void requestBuild(double counter, Vector2 pos,String key) ;
 
     public ActorFactory getNextFactory() {
         return nextFactory;

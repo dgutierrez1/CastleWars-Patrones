@@ -6,11 +6,6 @@ package com.castlewars.actors;
 
 public class SpikesmanActor extends KnightActor {
 
-    @Override
-    public double getDamage() {
-        return 0;
-    }
-
 
     @Override
     public double getSpeed() {

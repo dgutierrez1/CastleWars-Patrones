@@ -18,10 +18,12 @@ public class LordFactory extends ActorFactory {
     }
 
     @Override
-    public void requestBuild(double counter, Vector2 pos) {
-        actorBuilder.buildActor(pos);
+    public void requestBuild(double counter, Vector2 pos, String key) {
+        actorBuilder.buildActor(pos, key);
         actorBuilder.buildTextures();
         actorBuilder.buildAnimations();
         actorBuilder.buildMusic();
+        actorBuilder.buildExtrinsitAtributes((int )counter);
+
     }
 }

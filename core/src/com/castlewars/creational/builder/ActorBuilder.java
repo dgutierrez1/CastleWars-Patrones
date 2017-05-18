@@ -18,10 +18,13 @@ public abstract class ActorBuilder {
     }
     protected KnightActor actor;
 
-    public abstract void buildActor(Vector2 position);
+    public abstract void buildActor(Vector2 position, String key);
     public abstract void buildAnimations();
     public abstract void buildMusic();
     public abstract void buildTextures();
+    public  void buildExtrinsitAtributes(int counter){
+        actor.buildExtrinsicAtributtes(counter);
+    }
 
     public void setDirection(float speed){
         actor.setSpeed(speed);

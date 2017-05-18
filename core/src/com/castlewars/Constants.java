@@ -9,7 +9,7 @@ public class Constants {
     public static final float PIXELS_IN_METER = 90f;
 
 
-    public static final float PLAYER_SPEED = 1f;
+    public static final float PLAYER_SPEED = 0.1f;
 
     public static final float WIDTH = 360;
 
@@ -22,7 +22,9 @@ public class Constants {
     public static final double KNIGHT_DECORATOR_SPEED = 1.4;
 
     public static final double KNIGHT_HEALTH = 100;
-    public static final double KNIGHT_DAMAGE = 100;
+    public static final double KNIGHT_DAMAGE = 10;
+
+    public static final double KNIGHT_DAMAGE_RATIO = 10;
 
 
 }

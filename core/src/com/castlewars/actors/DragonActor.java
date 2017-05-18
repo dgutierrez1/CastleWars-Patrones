@@ -7,10 +7,6 @@ package com.castlewars.actors;
 public class DragonActor extends KnightActor {
 
 
-    @Override
-    public double getDamage() {
-        return 0;
-    }
 
 
     @Override

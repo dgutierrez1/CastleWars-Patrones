@@ -20,10 +20,10 @@ public class DragonBuilder extends ActorBuilder {
     }
 
     @Override
-    public void buildActor(Vector2 pos) {
+    public void buildActor(Vector2 pos, String key) {
         actor = new DragonActor();
         actor.setWord(world);
-        actor.setPosition(pos);
+        actor.setPosition(pos, key);
         actor.setTexture(new Texture("badlogic.jpg"));
         Gdx.app.log("CREATION", "Dragon");
 

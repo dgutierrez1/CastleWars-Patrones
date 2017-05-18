@@ -33,6 +33,8 @@ public class PlayScreen extends GameScreenObserver {
     private boolean inferiorPress = false;
     private boolean inferiorPressed = false;
 
+    private int actoKeyCounter;
+
     public PlayScreen(CastleWars game) {
         super(game);
 
@@ -40,6 +42,8 @@ public class PlayScreen extends GameScreenObserver {
         this.inferiorProcessor = new InferiorProcessor();
         superiorProcessor.attachObserver(this);
         inferiorProcessor.attachObserver(this);
+
+        actoKeyCounter = 0;
 
     }
 
@@ -65,10 +69,12 @@ public class PlayScreen extends GameScreenObserver {
                     Vector2 v = new Vector2(superiorProcessor.getLastX()/45, 5f);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +superiorCounter +" x: "+v.x+" y: "+v.y);
 
-                    KnightActor newActor = factory.createActor(superiorCounter,v );
+                    String strActorKey =  "superior-actor"+actoKeyCounter;
+                    KnightActor newActor = factory.createActor(superiorCounter,v , strActorKey);
                     stage.addActor(newActor);
-                    listActorSuperior.addLast(newActor);
+                    actorMap.put(strActorKey,newActor);
 
+                    actoKeyCounter++;
                     superiorCounter = 0;
                 }
                 superiorPressed = false;
@@ -84,10 +90,12 @@ public class PlayScreen extends GameScreenObserver {
                     Vector2 v = new Vector2(inferiorProcessor.getLastX()/45, 0);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +inferiorCounter +" x: "+v.x+" y: "+v.y);
 
-                    KnightActor newActor = factory.createActor(inferiorCounter,v );
+                    String strActorKey =  "inferior-actor"+actoKeyCounter;
+                    KnightActor newActor = factory.createActor(inferiorCounter,v , strActorKey);
                     stage.addActor(newActor);
-                    listActorInferior.addLast(newActor);
+                    actorMap.put(strActorKey,newActor);
 
+                    actoKeyCounter++;
                     inferiorCounter = 0;
                 }
                 inferiorPressed = false;
