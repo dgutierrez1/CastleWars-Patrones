@@ -24,7 +24,7 @@ public class Constants {
     public static final double KNIGHT_HEALTH = 100;
     public static final double KNIGHT_DAMAGE = 10;
 
-    public static final double KNIGHT_DAMAGE_RATIO = 10;
+    public static final double KNIGHT_DAMAGE_RATIO = 5;
 
 
 }
