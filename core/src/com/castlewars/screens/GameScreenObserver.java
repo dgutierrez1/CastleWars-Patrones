@@ -28,7 +28,7 @@ import com.castlewars.processors.InferiorProcessor;
 import com.castlewars.processors.Processor;
 import com.castlewars.processors.SuperiorProcessor;
 
-import com.badlogic.gdx.utils.Queue;
+import com.castlewars.structural.flyweight.FlyweightFactory;
 
 import java.util.HashMap;
 
@@ -70,10 +70,13 @@ public abstract class GameScreenObserver extends BaseScreen {
     }
 
     public void createFactories(){
-        ActorFactory spikesmansFactory = new SpikesmanFactory(0,world);
-        ActorFactory lordFactory = new LordFactory(1,world);
-        ActorFactory dragonRiderFactory = new DragonRiderFactory(2,world);
-        ActorFactory dragonFactory = new DragonFactory(3,world);
+
+        FlyweightFactory flyweightFactory = new FlyweightFactory();
+
+        ActorFactory spikesmansFactory = new SpikesmanFactory(0,world, flyweightFactory);
+        ActorFactory lordFactory = new LordFactory(1,world, flyweightFactory);
+        ActorFactory dragonRiderFactory = new DragonRiderFactory(2,world, flyweightFactory);
+        ActorFactory dragonFactory = new DragonFactory(3.0, world, flyweightFactory);
 
         spikesmansFactory.setNextFactory(lordFactory);
         lordFactory.setNextFactory(dragonRiderFactory);

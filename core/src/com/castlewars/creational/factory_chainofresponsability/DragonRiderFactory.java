@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.castlewars.actors.KnightActor;
 import com.castlewars.creational.builder.DragonRiderBuilder;
+import com.castlewars.structural.flyweight.FlyweightFactory;
 
 /**
  * Created by Daniel Gutierrez on 8/05/2017.
@@ -11,9 +12,9 @@ import com.castlewars.creational.builder.DragonRiderBuilder;
 
 public class DragonRiderFactory extends ActorFactory{
 
-    public DragonRiderFactory(double rangeStart, World world) {
+    public DragonRiderFactory(double rangeStart, World world, FlyweightFactory flyweightFactory) {
 
-        super(rangeStart,world);
+        super(rangeStart,world, flyweightFactory);
         actorBuilder = new DragonRiderBuilder(world);
     }
 

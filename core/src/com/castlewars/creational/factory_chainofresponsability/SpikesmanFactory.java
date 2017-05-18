@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
 import com.castlewars.creational.builder.SpikesmanBuilder;
+import com.castlewars.structural.flyweight.FlyweightFactory;
 
 /**
  * Created by Daniel Gutierrez on 8/05/2017.
@@ -12,8 +13,8 @@ import com.castlewars.creational.builder.SpikesmanBuilder;
 
 public class SpikesmanFactory extends ActorFactory {
 
-    public SpikesmanFactory(double rangeStart, World world) {
-        super(rangeStart, world);
+    public SpikesmanFactory(double rangeStart, World world, FlyweightFactory flyweightFactory) {
+        super(rangeStart, world, flyweightFactory);
         actorBuilder =  new SpikesmanBuilder(world);
     }
 
