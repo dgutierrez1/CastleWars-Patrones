@@ -29,7 +29,12 @@ import com.castlewars.processors.Processor;
 import com.castlewars.processors.SuperiorProcessor;
 
 import com.castlewars.structural.flyweight.FlyweightFactory;
+import com.badlogic.gdx.utils.Queue;
+import com.castlewars.structural.Composite.CreadorMenu;
+import com.castlewars.structural.Composite.MenuComponent;
+import com.castlewars.structural.Composite.OptionComposite;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -49,7 +54,7 @@ public abstract class GameScreenObserver extends BaseScreen {
 
 
     private Skin skin;
-    private TextButton play;
+
 
     public Processor superiorProcessor;
     public Processor inferiorProcessor;
@@ -58,7 +63,9 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     public GameScreenObserver(final CastleWars game) {
         super(game);
-        stage = new Stage(new FitViewport(640, 360));
+        stage = new Stage(new FitViewport(360,640));
+
+        
         world = new World(new Vector2(0, 0), true);
         world.setContactListener(new GameContactListener());
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -67,6 +74,79 @@ public abstract class GameScreenObserver extends BaseScreen {
         superiorActorMap =  new HashMap<String, KnightActor>();
         actorMap  =  new HashMap<String, KnightActor>();
         createFactories();
+
+
+        MenuComponent menuOponente1= new OptionComposite();
+        MenuComponent menuOponente2= new OptionComposite();
+
+        CreadorMenu creador= new CreadorMenu();
+        creador.crearMenuPoderes(menuOponente1,menuOponente2,skin,stage);
+
+        ArrayList<TextButton> botons1=creador.getBotonesPoderes1();
+        ArrayList<TextButton> botons2=creador.getBotonesPoderes2();
+
+        final TextButton shield1=creador.GetBoton("Escudo",botons1);
+        final TextButton speed1=creador.GetBoton("Velocidad",botons1);
+        final TextButton damage1=creador.GetBoton("Daño",botons1);
+
+        final TextButton shield2=creador.GetBoton("Escudo",botons2);
+        final TextButton speed2=creador.GetBoton("Velocidad",botons2);
+        final TextButton damage2=creador.GetBoton("Daño",botons2);
+
+        shield1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button shield1");
+
+            }
+        });
+        speed1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button speed1");
+
+            }
+        });
+        damage1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button damage1");
+
+            }
+        });
+        shield2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button shield2");
+
+            }
+        });
+        speed2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button speed2");
+
+            }
+        });
+        damage2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button damage2");
+
+            }
+        });
+
+
+
+
+
+
     }
 
     public void createFactories(){
@@ -97,22 +177,11 @@ public abstract class GameScreenObserver extends BaseScreen {
     public void show() {
         InputMultiplexer multiplexer = new InputMultiplexer();
 
-        play = new TextButton("Play", skin);
 
-        play.addCaptureListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // Take me to the game screen!
-                //game.setScreen(game.gameScreen);
-                Gdx.app.log("VERF", "button play");
-                //game.startGame();
 
-            }
-        });
-
-        play.setSize(200, 80);
-        play.setPosition(40, 140);
-        stage.addActor(play);
+        //play.setSize(200, 80);
+        //play.setPosition(40, 140);
+        //stage.addActor(play);
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(superiorProcessor);
         multiplexer.addProcessor(inferiorProcessor);

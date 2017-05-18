@@ -15,31 +15,95 @@ import java.util.HashMap;
 public class CreadorMenu {
 
 private ArrayList<TextButton> botones;
+    private ArrayList<TextButton> botonesPoderes1;
+    private ArrayList<TextButton> botonesPoderes2;
+
+    public void crearMenuPoderes(MenuComponent menu1,MenuComponent menu2, Skin skin, Stage stage){
+
+        botonesPoderes1= new ArrayList<TextButton>();
+        botonesPoderes2= new ArrayList<TextButton>();
+
+        MenuComponent optionShield1=new OptionLeaf("Escudo",skin);
+        MenuComponent optionSpeed1=new OptionLeaf("Velocidad",skin);
+        MenuComponent optionDamage1=new OptionLeaf("Daño",skin);
+
+        menu1.addComponente(optionShield1);
+        menu1.addComponente(optionSpeed1);
+        menu1.addComponente(optionDamage1);
+
+        MenuComponent optionShield2=new OptionLeaf("Escudo",skin);
+        MenuComponent optionSpeed2=new OptionLeaf("Velocidad",skin);
+        MenuComponent optionDamage2=new OptionLeaf("Daño",skin);
+
+        menu2.addComponente(optionShield2);
+        menu2.addComponente(optionSpeed2);
+        menu2.addComponente(optionDamage2);
+
+
+        TextButton shield1=optionShield1.getButton();
+        TextButton speed1=optionSpeed1.getButton();
+        TextButton damage1=optionDamage1.getButton();
+
+        TextButton shield2=optionShield2.getButton();
+        TextButton speed2=optionSpeed2.getButton();
+        TextButton damage2=optionDamage2.getButton();
+
+
+        shield1.setPosition(0, 0);
+        speed1.setPosition(300, 0);
+        damage1.setPosition(600, 0);
+        shield2.setPosition(0, 300);
+        speed2.setPosition(300, 300);
+        damage2.setPosition(600, 300);
+
+        shield1.setSize(200, 200);
+        speed1.setSize(200, 200);
+        damage1.setSize(200, 200);
+        shield2.setSize(200, 200);
+        speed2.setSize(200, 200);
+        damage2.setSize(200, 200);
+
+
+        stage.addActor(shield1);
+        stage.addActor(speed1);
+        stage.addActor(damage1);
+        stage.addActor(shield2);
+        stage.addActor(speed2);
+        stage.addActor(damage2);
+
+        botonesPoderes1.add(shield1);
+        botonesPoderes1.add(speed1);
+        botonesPoderes1.add(damage1);
+        botonesPoderes2.add(shield2);
+        botonesPoderes2.add(speed2);
+        botonesPoderes2.add(damage2);
+    }
+
 
     public void crearMenu(MenuComponent menu, Skin skin, Stage stage){
 
 
         botones= new ArrayList<TextButton>();
         //creacion menu principal
-        final MenuComponent menuPlay= new OptionComposite("play",skin);
-        final MenuComponent menuCredits= new OptionComposite("credits",skin);
-        final MenuComponent optionHome=new OptionLeaf("home",skin);
+        MenuComponent menuPlay= new OptionComposite("play",skin);
+        MenuComponent menuCredits= new OptionComposite("credits",skin);
+        MenuComponent optionHome=new OptionLeaf("home",skin);
 
         menu.addComponente(menuPlay);
         menu.addComponente(menuCredits);
         menu.addComponente(optionHome);
 
-        final TextButton play=menuPlay.getButton();
-        final TextButton credits=menuCredits.getButton();
-        final TextButton home=optionHome.getButton();
+        TextButton play=menuPlay.getButton();
+        TextButton credits=menuCredits.getButton();
+        TextButton home=optionHome.getButton();
 
-        play.setPosition(0, 0);
-        credits.setPosition(200, 0);
-        home.setPosition(100, 0);
+        play.setPosition(100, 0);
+        credits.setPosition(300, 0);
+        home.setPosition(0, 0);
 
-        play.setSize(100, 300);
-        credits.setSize(100, 300);
-        home.setSize(100, 300);
+        play.setSize(200, 200);
+        credits.setSize(200, 200);
+        home.setSize(100, 200);
 
 
         //creacion menu play
@@ -53,10 +117,10 @@ private ArrayList<TextButton> botones;
         final TextButton nuevo=optionNuevoJuego.getButton();
         final TextButton reanudar=optionReanudar.getButton();
 
-        nuevo.setPosition(400, 0);
-        reanudar.setPosition(200, 0);
-        nuevo.setSize(100, 300);
-        reanudar.setSize(100, 300);
+        nuevo.setPosition(100, 0);
+        reanudar.setPosition(300, 0);
+        nuevo.setSize(200, 200);
+        reanudar.setSize(200, 200);
 
 
         //creacion menu creditos
@@ -70,10 +134,10 @@ private ArrayList<TextButton> botones;
         final TextButton contacto=optionContacto.getButton();
         final TextButton acercaDe=optionAcercaDe.getButton();
 
-        contacto.setPosition(400, 0);
-        acercaDe.setPosition(200, 0);
-        acercaDe.setSize(100, 300);
-        contacto.setSize(100, 300);
+        contacto.setPosition(100, 0);
+        acercaDe.setPosition(300, 0);
+        acercaDe.setSize(200, 200);
+        contacto.setSize(200, 200);
 
         stage.addActor(play);
         stage.addActor(credits);
@@ -94,11 +158,11 @@ private ArrayList<TextButton> botones;
 
     }
 
-    public TextButton GetBoton(String nombre){
+    public TextButton GetBoton(String nombre,ArrayList<TextButton> botons){
 
         TextButton boton=null;
 
-        for (TextButton bot: botones) {
+        for (TextButton bot: botons) {
             //Gdx.app.log("VERF", nombre);
             if(bot.getText().toString().equals(nombre)){
                 boton=bot;
@@ -109,7 +173,27 @@ private ArrayList<TextButton> botones;
         return boton;
     }
 
+    public ArrayList<TextButton> getBotonesPoderes1() {
+        return botonesPoderes1;
+    }
 
+    public void setBotonesPoderes1(ArrayList<TextButton> botonesPoderes1) {
+        this.botonesPoderes1 = botonesPoderes1;
+    }
 
+    public ArrayList<TextButton> getBotonesPoderes2() {
+        return botonesPoderes2;
+    }
 
+    public void setBotonesPoderes2(ArrayList<TextButton> botonesPoderes2) {
+        this.botonesPoderes2 = botonesPoderes2;
+    }
+
+    public ArrayList<TextButton> getBotones() {
+        return botones;
+    }
+
+    public void setBotones(ArrayList<TextButton> botones) {
+        this.botones = botones;
+    }
 }

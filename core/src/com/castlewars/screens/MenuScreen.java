@@ -25,27 +25,28 @@ public class MenuScreen extends BaseScreen {
 
     private Stage stage;
     private Skin skin;
-    private MenuComponent menu;
+
 
 
     public MenuScreen(final CastleWars game) {
         super(game);
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        stage = new Stage(new FitViewport(640, 360));
 
-        menu= new OptionComposite();
+        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        stage = new Stage(new FitViewport(360,640));
+
+        MenuComponent menu= new OptionComposite();
 
         CreadorMenu creador= new CreadorMenu();
         creador.crearMenu(menu,skin,stage);
 
-
-        final TextButton play=creador.GetBoton("play");
-        final TextButton credits=creador.GetBoton("credits");
-        final TextButton home=creador.GetBoton("home");
-        final TextButton nuevo=creador.GetBoton("Nuevo Juego");
-        final TextButton reanudar=creador.GetBoton("Reanudar Partida");
-        final TextButton contacto=creador.GetBoton("Contacto Desarrolladores");
-        final TextButton acercaDe=creador.GetBoton("Acerca del juego");
+        ArrayList<TextButton> botons=creador.getBotones();
+        final TextButton play=creador.GetBoton("play",botons);
+        final TextButton credits=creador.GetBoton("credits",botons);
+        final TextButton home=creador.GetBoton("home",botons);
+        final TextButton nuevo=creador.GetBoton("Nuevo Juego",botons);
+        final TextButton reanudar=creador.GetBoton("Reanudar Partida",botons);
+        final TextButton contacto=creador.GetBoton("Contacto Desarrolladores",botons);
+        final TextButton acercaDe=creador.GetBoton("Acerca del juego",botons);
 
 
         play.addCaptureListener(new ChangeListener() {
