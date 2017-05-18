@@ -16,13 +16,13 @@ public class DragonFactory extends ActorFactory {
         actorBuilder = new DragonBuilder(world);
     }
 
+
     @Override
-    public KnightActor requestBuild(double counter, Vector2 pos) {
+    public void requestBuild(double counter, Vector2 pos) {
         actorBuilder.buildActor(pos);
         actorBuilder.buildTextures();
         actorBuilder.buildAnimations();
         actorBuilder.buildMusic();
-        return actorBuilder.getActor();
     }
 
 

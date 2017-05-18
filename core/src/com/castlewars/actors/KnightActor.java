@@ -33,7 +33,7 @@ public abstract class KnightActor extends ComponentDecorator {
     private double health;
     private double damage;
     private double shield;
-    private double speed;
+    private float speed;
 
     private com.castlewars.actors.animations.Animation attackAnimation;
     private com.castlewars.actors.animations.Animation walkAnimation;
@@ -42,7 +42,6 @@ public abstract class KnightActor extends ComponentDecorator {
     public KnightActor() {
         alive = true;
         attacking = false;
-
         // Create the player body.
 
 
@@ -81,11 +80,14 @@ public abstract class KnightActor extends ComponentDecorator {
         this.texture=tex;
     }
 
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
 
     @Override
     public void act(float delta) {
         //float speedY = body.getLinearVelocity().y;
-        body.setLinearVelocity( 0, Constants.PLAYER_SPEED);
+        body.setLinearVelocity( 0,speed);
     }
 
     public void detach() {

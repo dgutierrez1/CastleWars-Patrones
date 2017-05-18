@@ -23,7 +23,7 @@ public class DragonRiderBuilder extends ActorBuilder {
     public void buildActor(Vector2 position) {
         actor = new DragonRiderActor();
         actor.setWord(world);
-        actor.setPosition(new Vector2(1,1));
+        actor.setPosition(position);
         actor.setTexture(new Texture("badlogic.jpg"));
         Gdx.app.log("CREATION", "Dragon Rider");
     }
@@ -43,8 +43,5 @@ public class DragonRiderBuilder extends ActorBuilder {
 
     }
 
-    @Override
-    public KnightActor getActor() {
-        return null;
-    }
+
 }

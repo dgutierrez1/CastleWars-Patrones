@@ -1,5 +1,6 @@
 package com.castlewars.creational.factory_chainofresponsability;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.castlewars.Constants;
@@ -24,23 +25,44 @@ public abstract class ActorFactory {
 
     public ActorFactory(double rangeStart, World world){
         this.world = world;
-        rangeStart = rangeStart * Constants.KNIGHT_SELECTION_RATIO;
-        rangeEnd = (rangeStart + 1) * Constants.KNIGHT_SELECTION_RATIO;
+        this.rangeStart = rangeStart * Constants.KNIGHT_SELECTION_RATIO;
+        this.rangeEnd = (rangeStart + 1) * Constants.KNIGHT_SELECTION_RATIO;
     }
 
 
 
     /*Metodo encargado de verificar si se puede crear el objeto en esta factory, sino lo delega a la siguiente*/
     public KnightActor createActor(double counter, Vector2 position){
-        if((rangeStart < counter && counter < rangeEnd) || nextFactory==null){
-            return requestBuild(counter, position);
+        if((rangeStart <= counter && counter < rangeEnd) || nextFactory==null){
+            Gdx.app.log("VERF", "Y position: "+position.y);
+            Gdx.app.log("VERF", "height: "+Constants.HEIGHT/2);
+
+            if((Constants.HEIGHT/2)>(position.y*Constants.PIXELS_IN_METER)){
+                return requestBuildInferior(counter, position);
+            }else {
+                return requestBuildSuperior(counter, position);
+            }
         }else{
             return nextFactory.createActor(counter, position);
         }
     }
 
-    /*Metodo implementado en cada Factory dependiendo de lo que se requiera*/
-    public abstract KnightActor requestBuild(double counter, Vector2 pos);
+    public KnightActor requestBuildSuperior(double counter, Vector2 pos) {
+        requestBuild(counter,pos);
+        actorBuilder.setDirection(-(Constants.PLAYER_SPEED));
+        Gdx.app.log("DEPLOY", "actor superior");
+        return actorBuilder.getActor();
+
+    }
+
+    public KnightActor requestBuildInferior(double counter, Vector2 pos) {
+        requestBuild(counter,pos);
+        actorBuilder.setDirection(Constants.PLAYER_SPEED);
+        Gdx.app.log("DEPLOY", "actor inferior");
+        return actorBuilder.getActor();
+
+    }
+    public abstract void requestBuild(double counter, Vector2 pos) ;
 
     public ActorFactory getNextFactory() {
         return nextFactory;

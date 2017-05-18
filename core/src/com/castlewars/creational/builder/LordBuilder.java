@@ -44,8 +44,5 @@ public class LordBuilder extends ActorBuilder {
 
     }
 
-    @Override
-    public KnightActor getActor() {
-        return null;
-    }
+
 }

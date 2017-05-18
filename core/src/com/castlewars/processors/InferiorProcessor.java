@@ -13,7 +13,7 @@ public class InferiorProcessor extends Processor {
 
     public boolean isInRegion(int screenY){
         if(((Constants.HEIGHT/2)< screenY)){
-            Gdx.app.log("VERF", "INFERIOR");
+            //Gdx.app.log("VERF", "INFERIOR");
             return true;
         }else{
             return false;

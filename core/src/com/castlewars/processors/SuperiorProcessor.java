@@ -15,7 +15,7 @@ public class SuperiorProcessor extends Processor {
 
     public boolean isInRegion(int screenY){
         if(((Constants.HEIGHT/2)> screenY)){
-            Gdx.app.log("VERF", "SUPERIOR");
+            //Gdx.app.log("VERF", "SUPERIOR");
             return true;
         }else{
             return false;
