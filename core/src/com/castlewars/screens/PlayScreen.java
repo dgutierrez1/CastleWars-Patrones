@@ -2,6 +2,12 @@ package com.castlewars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.castlewars.CastleWars;
 import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
@@ -13,11 +19,16 @@ import com.castlewars.creational.factory_chainofresponsability.LordFactory;
 import com.castlewars.creational.factory_chainofresponsability.SpikesmanFactory;
 import com.castlewars.processors.InferiorProcessor;
 import com.castlewars.processors.SuperiorProcessor;
+import com.castlewars.structural.Composite.CreadorMenu;
+import com.castlewars.structural.Composite.MenuComponent;
+import com.castlewars.structural.Composite.OptionComposite;
 import com.castlewars.structural.decorator.ActorDecorator;
 import com.castlewars.structural.decorator.DamageDecorator;
 import com.castlewars.structural.decorator.ComponentDecorator;
 import com.castlewars.structural.decorator.ShieldDecorator;
 import com.castlewars.structural.decorator.SpeedDecorator;
+
+import java.util.ArrayList;
 
 /**
  * Created by Daniel Gutierrez on 8/05/2017.
@@ -35,6 +46,8 @@ public class PlayScreen extends GameScreenObserver {
 
     private int actoKeyCounter;
 
+
+
     public PlayScreen(CastleWars game) {
         super(game);
 
@@ -45,9 +58,9 @@ public class PlayScreen extends GameScreenObserver {
 
         actoKeyCounter = 0;
 
+
+
     }
-
-
 
     @Override
     public void update() {
