@@ -30,6 +30,8 @@ import com.castlewars.structural.decorator.SpeedDecorator;
 
 import java.util.ArrayList;
 
+import static com.castlewars.Constants.*;
+
 /**
  * Created by Daniel Gutierrez on 8/05/2017.
  */
@@ -79,7 +81,7 @@ public class PlayScreen extends GameScreenObserver {
                 if(superiorCounter>0){
                     Gdx.app.log("DEPLOY", "SOLDIER WITH superior" +superiorCounter);
 
-                    Vector2 v = new Vector2(superiorProcessor.getLastX()/45, 4.5f);
+                    Vector2 v = new Vector2(superiorProcessor.getLastX()/PIXELS_IN_METER, HEIGHT/PIXELS_IN_METER);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +superiorCounter +" x: "+v.x+" y: "+v.y);
 
                     String strActorKey =  "superior-actor"+actoKeyCounter;
@@ -100,7 +102,7 @@ public class PlayScreen extends GameScreenObserver {
                 inferiorCounter++;
             }else{
                 if(inferiorCounter> 0){
-                    Vector2 v = new Vector2(inferiorProcessor.getLastX()/45, -0.5f);
+                    Vector2 v = new Vector2(inferiorProcessor.getLastX()/PIXELS_IN_METER, -0.5f);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +inferiorCounter +" x: "+v.x+" y: "+v.y);
 
                     String strActorKey =  "inferior-actor"+actoKeyCounter;
