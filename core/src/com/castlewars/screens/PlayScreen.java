@@ -66,7 +66,7 @@ public class PlayScreen extends GameScreenObserver {
                 if(superiorCounter>0){
                     Gdx.app.log("DEPLOY", "SOLDIER WITH superior" +superiorCounter);
 
-                    Vector2 v = new Vector2(superiorProcessor.getLastX()/45, 5f);
+                    Vector2 v = new Vector2(superiorProcessor.getLastX()/45, 4.5f);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +superiorCounter +" x: "+v.x+" y: "+v.y);
 
                     String strActorKey =  "superior-actor"+actoKeyCounter;
@@ -87,7 +87,7 @@ public class PlayScreen extends GameScreenObserver {
                 inferiorCounter++;
             }else{
                 if(inferiorCounter> 0){
-                    Vector2 v = new Vector2(inferiorProcessor.getLastX()/45, 0);
+                    Vector2 v = new Vector2(inferiorProcessor.getLastX()/45, -0.5f);
                     Gdx.app.log("DEPLOY", "SOLDIER inferior" +inferiorCounter +" x: "+v.x+" y: "+v.y);
 
                     String strActorKey =  "inferior-actor"+actoKeyCounter;
