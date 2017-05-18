@@ -75,23 +75,92 @@ public abstract class GameScreenObserver extends BaseScreen {
         actorMap  =  new HashMap<String, KnightActor>();
         createFactories();
 
-
-        MenuComponent menuOponente1= new OptionComposite();
-        MenuComponent menuOponente2= new OptionComposite();
-
         CreadorMenu creador= new CreadorMenu();
-        creador.crearMenuPoderes(menuOponente1,menuOponente2,skin,stage);
+        creador.crearMenuOpciones(skin,stage);
 
-        ArrayList<TextButton> botons1=creador.getBotonesPoderes1();
-        ArrayList<TextButton> botons2=creador.getBotonesPoderes2();
+        ArrayList<TextButton> botons1=creador.getBotonesOpciones1();
+        ArrayList<TextButton> botons2=creador.getBotonesOpciones2();
 
+        final TextButton home1=creador.GetBoton("Home",botons1);
+        final TextButton opciones1=creador.GetBoton("Opciones",botons1);
+        final TextButton poderes1=creador.GetBoton("Poderes",botons1);
+        final TextButton pausar1=creador.GetBoton("Pausar",botons1);
+        final TextButton salir1=creador.GetBoton("Salir",botons1);
         final TextButton shield1=creador.GetBoton("Escudo",botons1);
         final TextButton speed1=creador.GetBoton("Velocidad",botons1);
         final TextButton damage1=creador.GetBoton("Daño",botons1);
 
+        final TextButton home2=creador.GetBoton("Home",botons2);
+        final TextButton opciones2=creador.GetBoton("Opciones",botons2);
+        final TextButton poderes2=creador.GetBoton("Poderes",botons2);
+        final TextButton pausar2=creador.GetBoton("Pausar",botons2);
+        final TextButton salir2=creador.GetBoton("Salir",botons2);
         final TextButton shield2=creador.GetBoton("Escudo",botons2);
         final TextButton speed2=creador.GetBoton("Velocidad",botons2);
         final TextButton damage2=creador.GetBoton("Daño",botons2);
+
+        home1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button home1");
+
+                shield1.remove();
+                speed1.remove();
+                damage1.remove();
+                pausar1.remove();
+                salir1.remove();
+
+                stage.addActor(opciones1);
+                stage.addActor(poderes1);
+
+
+            }
+        });
+        opciones1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button opciones1");
+
+                opciones1.remove();
+                poderes1.remove();
+
+                stage.addActor(pausar1);
+                stage.addActor(salir1);
+            }
+        });
+        poderes1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button poderes1");
+
+                opciones1.remove();
+                poderes1.remove();
+
+                stage.addActor(shield1);
+                stage.addActor(speed1);
+                stage.addActor(damage1);
+
+            }
+        });
+        pausar1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button pausar1");
+
+            }
+        });
+        salir1.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button shield1");
+
+            }
+        });
 
         shield1.addCaptureListener(new ChangeListener() {
             @Override
@@ -117,6 +186,73 @@ public abstract class GameScreenObserver extends BaseScreen {
 
             }
         });
+
+        home2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button home2");
+
+                shield2.remove();
+                speed2.remove();
+                damage2.remove();
+                pausar2.remove();
+                salir2.remove();
+
+                stage.addActor(opciones2);
+                stage.addActor(poderes2);
+
+
+
+            }
+        });
+
+        opciones2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button opciones2");
+
+                opciones2.remove();
+                poderes2.remove();
+
+                stage.addActor(pausar2);
+                stage.addActor(salir2);
+
+            }
+        });
+        poderes2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button poderes2");
+
+                opciones2.remove();
+                poderes2.remove();
+
+                stage.addActor(shield2);
+                stage.addActor(speed2);
+                stage.addActor(damage2);
+
+            }
+        });
+        pausar2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button pausar2");
+
+            }
+        });
+        salir2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //game.setScreen(game.creditsScreen);
+                Gdx.app.log("VERF", "button salir2");
+
+            }
+        });
+
         shield2.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

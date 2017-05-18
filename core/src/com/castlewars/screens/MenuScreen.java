@@ -34,10 +34,8 @@ public class MenuScreen extends BaseScreen {
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         stage = new Stage(new FitViewport(360,640));
 
-        MenuComponent menu= new OptionComposite();
-
         CreadorMenu creador= new CreadorMenu();
-        creador.crearMenu(menu,skin,stage);
+        creador.crearMenu(skin,stage);
 
         ArrayList<TextButton> botons=creador.getBotones();
         final TextButton play=creador.GetBoton("play",botons);
