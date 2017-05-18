@@ -84,8 +84,8 @@ public abstract class KnightActor extends ComponentDecorator {
 
     @Override
     public void act(float delta) {
-        float speedX = body.getLinearVelocity().x;
-        body.setLinearVelocity(Constants.PLAYER_SPEED, speedX);
+        //float speedY = body.getLinearVelocity().y;
+        body.setLinearVelocity( 0, Constants.PLAYER_SPEED);
     }
 
     public void detach() {
