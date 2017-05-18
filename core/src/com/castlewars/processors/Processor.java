@@ -18,6 +18,8 @@ public abstract class Processor extends InputAdapter {
     private List<GameScreenObserver> observers;
     boolean pressState = false;
     boolean pressed = false;
+    int lastX;
+    int lastY;
 
     public Processor(){
         observers = new ArrayList<GameScreenObserver>();
@@ -44,6 +46,8 @@ public abstract class Processor extends InputAdapter {
         if(pointer == 0){
             if(isInRegion((screenY))){
                 pressState = false;
+                lastX = screenX;
+                lastY = screenY;
                 notifyObservers();
                 return true;
             }else{
@@ -70,5 +74,13 @@ public abstract class Processor extends InputAdapter {
 
     public boolean getPressed(){
         return pressed;
+    }
+
+    public int getLastX() {
+        return lastX;
+    }
+
+    public int getLastY() {
+        return lastY;
     }
 }

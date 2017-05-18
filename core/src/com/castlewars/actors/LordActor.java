@@ -7,7 +7,8 @@ package com.castlewars.actors;
 public class LordActor extends KnightActor {
 
     public LordActor() {
-        super();
+
+
     }
 
     @Override

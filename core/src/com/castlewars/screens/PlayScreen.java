@@ -1,9 +1,16 @@
 package com.castlewars.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.castlewars.CastleWars;
+import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
 import com.castlewars.actors.LordActor;
+import com.castlewars.creational.factory_chainofresponsability.ActorFactory;
+import com.castlewars.creational.factory_chainofresponsability.DragonFactory;
+import com.castlewars.creational.factory_chainofresponsability.DragonRiderFactory;
+import com.castlewars.creational.factory_chainofresponsability.LordFactory;
+import com.castlewars.creational.factory_chainofresponsability.SpikesmanFactory;
 import com.castlewars.processors.InferiorProcessor;
 import com.castlewars.processors.SuperiorProcessor;
 import com.castlewars.structural.decorator.ActorDecorator;
@@ -33,7 +40,10 @@ public class PlayScreen extends GameScreenObserver {
         this.inferiorProcessor = new InferiorProcessor();
         superiorProcessor.attachObserver(this);
         inferiorProcessor.attachObserver(this);
+
     }
+
+
 
     @Override
     public void update() {
@@ -52,17 +62,12 @@ public class PlayScreen extends GameScreenObserver {
                 if(superiorCounter>0){
                     Gdx.app.log("DEPLOY", "SOLDIER WITH superior" +superiorCounter);
 
-                    ComponentDecorator soldado= new LordActor();
-                    Gdx.app.log("DEPLOY", "caracteristicas"+soldado.mostrarCaracteristicas());
+                    Vector2 v = new Vector2(superiorProcessor.getLastX()/45, 5f);
+                    Gdx.app.log("DEPLOY", "SOLDIER inferior" +superiorCounter +" x: "+v.x+" y: "+v.y);
 
-                    ActorDecorator damageDecorador= new DamageDecorator(soldado);
-                    Gdx.app.log("DEPLOY", "ataque :"+damageDecorador.getDamage());
-
-                    ActorDecorator velocidadDecorador= new SpeedDecorator(soldado);
-                    Gdx.app.log("DEPLOY", "velocidad : "+velocidadDecorador.getSpeed());
-
-                    ActorDecorator escudoDecorador= new ShieldDecorator(soldado);
-                    Gdx.app.log("DEPLOY", "escudo : "+escudoDecorador.getShield());
+                    KnightActor newActor = factory.createActor(superiorCounter,v );
+                    stage.addActor(newActor);
+                    listActorSuperior.addLast(newActor);
 
                     superiorCounter = 0;
                 }
@@ -76,7 +81,12 @@ public class PlayScreen extends GameScreenObserver {
                 inferiorCounter++;
             }else{
                 if(inferiorCounter> 0){
-                    Gdx.app.log("DEPLOY", "SOLDIER inferior" +inferiorCounter);
+                    Vector2 v = new Vector2(inferiorProcessor.getLastX()/45, 0);
+                    Gdx.app.log("DEPLOY", "SOLDIER inferior" +inferiorCounter +" x: "+v.x+" y: "+v.y);
+
+                    KnightActor newActor = factory.createActor(inferiorCounter,v );
+                    stage.addActor(newActor);
+                    listActorInferior.addLast(newActor);
 
                     inferiorCounter = 0;
                 }

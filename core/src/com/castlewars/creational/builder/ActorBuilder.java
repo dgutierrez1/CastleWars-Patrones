@@ -2,6 +2,7 @@ package com.castlewars.creational.builder;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
 
 /**
@@ -9,16 +10,23 @@ import com.castlewars.actors.KnightActor;
  */
 
 public abstract class ActorBuilder {
-    protected World world;
-    protected KnightActor actor;
 
+    protected World world;
 
     public ActorBuilder(World world){
         this.world = world;
     }
+    protected KnightActor actor;
+
     public abstract void buildActor(Vector2 position);
     public abstract void buildAnimations();
     public abstract void buildMusic();
     public abstract void buildTextures();
-    public abstract KnightActor getActor();
+
+    public void setDirection(float speed){
+        actor.setSpeed(speed);
+    }
+    public KnightActor getActor(){
+        return actor;
+    }
 }
