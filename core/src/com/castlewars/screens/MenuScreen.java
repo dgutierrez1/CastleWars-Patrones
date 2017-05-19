@@ -2,6 +2,7 @@ package com.castlewars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.castlewars.CastleWars;
+import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
 import com.castlewars.behavior.Memento.Caretaker;
 import com.castlewars.behavior.Memento.Memento;
@@ -32,7 +34,7 @@ public class MenuScreen extends BaseScreen {
     private Stage stage;
     private Skin skin;
 
-
+    Texture bg;
 
     public MenuScreen(final CastleWars game) {
         super(game);
@@ -53,6 +55,11 @@ public class MenuScreen extends BaseScreen {
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         stage = new Stage(new FitViewport(360,640));
+
+        bg = new Texture("menu_bg.jpg");
+
+
+
 
         CreadorMenu creador= new CreadorMenu();
         creador.crearMenu(skin,stage);
@@ -198,6 +205,11 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(0.2f, 0.3f, 0.5f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
+
+        stage.getBatch().begin();
+        stage.getBatch().draw(bg, 0,0, 360,640 );
+        stage.getBatch().end();
+
         stage.draw();
     }
 }

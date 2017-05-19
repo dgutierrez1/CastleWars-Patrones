@@ -199,7 +199,7 @@ public abstract class KnightActor extends ComponentDecorator implements Cloneabl
     }
 
     @Override
-    public double getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
@@ -208,5 +208,11 @@ public abstract class KnightActor extends ComponentDecorator implements Cloneabl
         return health;
     }
 
+    public void setHealth(double health) {
+        this.health = health;
+    }
 
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
 }

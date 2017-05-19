@@ -1,6 +1,7 @@
 package com.castlewars.behavior.Memento;
 
 import com.castlewars.actors.KnightActor;
+import com.castlewars.structural.decorator.ComponentDecorator;
 
 import java.util.HashMap;
 
@@ -11,10 +12,10 @@ import java.util.HashMap;
 public class Memento {
 
 
-    HashMap<String, KnightActor> actorMap;
+    HashMap<String, ComponentDecorator> actorMap;
     private  String nombre;
 
-    public Memento(HashMap<String, KnightActor> actorMap,String nombre) {
+    public Memento(HashMap<String, ComponentDecorator> actorMap, String nombre) {
         this.actorMap = actorMap;
         this.nombre=nombre;
 
@@ -28,11 +29,11 @@ public class Memento {
         this.nombre = nombre;
     }
 
-    public HashMap<String, KnightActor> getActorMap() {
+    public HashMap<String, ComponentDecorator> getActorMap() {
         return actorMap;
     }
 
-    public void setActorMap(HashMap<String, KnightActor> actorMap) {
+    public void setActorMap(HashMap<String, ComponentDecorator> actorMap) {
         this.actorMap = actorMap;
     }
 }

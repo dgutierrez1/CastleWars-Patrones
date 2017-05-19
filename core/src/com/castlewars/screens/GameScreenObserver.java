@@ -3,6 +3,7 @@ package com.castlewars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -30,6 +31,7 @@ import com.castlewars.processors.InferiorProcessor;
 import com.castlewars.processors.Processor;
 import com.castlewars.processors.SuperiorProcessor;
 
+import com.castlewars.structural.decorator.ComponentDecorator;
 import com.castlewars.structural.flyweight.FlyweightFactory;
 import com.badlogic.gdx.utils.Queue;
 import com.castlewars.structural.Composite.CreadorMenu;
@@ -58,16 +60,22 @@ public abstract class GameScreenObserver extends BaseScreen {
     private World world;
 
 
-    HashMap<String, KnightActor> actorMap;
+    HashMap<String, ComponentDecorator> actorMap;
 
 
     private Skin skin;
+
+    Texture bg;
 
 
     public Processor superiorProcessor;
     public Processor inferiorProcessor;
 
     public ActorFactory factory;
+
+    protected boolean healthDeco = false;
+    protected boolean attackDeco = false;
+    protected boolean speedDeco = false;
 
 
     public Memento guardarPartida(){
@@ -82,7 +90,7 @@ public abstract class GameScreenObserver extends BaseScreen {
         world = new World(new Vector2(0, 0), true);
         world.setContactListener(new GameContactListener());
 
-        actorMap  =  new HashMap<String, KnightActor>();
+        actorMap  =  new HashMap<String, ComponentDecorator>();
         createFactories();
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -107,10 +115,10 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     }*/
 
-    public void setActorMap(HashMap<String, KnightActor> actorMap) {
+    public void setActorMap(HashMap<String, ComponentDecorator> actorMap) {
         this.actorMap = actorMap;
-        for (HashMap.Entry<String, KnightActor> entry : actorMap.entrySet()) {
-            stage.addActor((KnightActor)entry.getValue());
+        for (HashMap.Entry<String, ComponentDecorator> entry : actorMap.entrySet()) {
+            stage.addActor((ComponentDecorator)entry.getValue());
         }
     }
 
@@ -127,6 +135,9 @@ public abstract class GameScreenObserver extends BaseScreen {
         multiplexer.addProcessor(inferiorProcessor);
 
         Gdx.input.setInputProcessor(multiplexer);
+
+        bg = new Texture("fondo.jpg");
+
 
         CreadorMenu creador = new CreadorMenu();
         creador.crearMenuOpciones(skin, stage);
@@ -234,6 +245,8 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button shield1");
+                resetDecorate();
+                healthDeco = true;
 
             }
         });
@@ -242,7 +255,8 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button speed1");
-
+                resetDecorate();
+                speedDeco = true;
             }
         });
         damage1.addCaptureListener(new ChangeListener() {
@@ -250,7 +264,8 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button damage1");
-
+                resetDecorate();
+                attackDeco = true;
             }
         });
 
@@ -336,7 +351,9 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button shield2");
+                resetDecorate();
 
+                healthDeco = true;
             }
         });
         speed2.addCaptureListener(new ChangeListener() {
@@ -344,7 +361,7 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button speed2");
-
+                speedDeco = true;
             }
         });
         damage2.addCaptureListener(new ChangeListener() {
@@ -352,7 +369,9 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button damage2");
+                resetDecorate();
 
+                attackDeco = true;
             }
         });
     }
@@ -373,6 +392,12 @@ public abstract class GameScreenObserver extends BaseScreen {
 
         factory = spikesmansFactory;
 
+    }
+
+    public void resetDecorate(){
+        healthDeco = false;
+        attackDeco = false;
+        speedDeco = false;
     }
 
     public void deleteFromSuperiorList(String actor){
@@ -398,6 +423,11 @@ public abstract class GameScreenObserver extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         accumulate();
+
+        stage.getBatch().begin();
+        stage.getBatch().draw(bg, 0,-100);
+        stage.getBatch().end();
+
         world.step(delta, 6, 2);
         stage.draw();
     }
@@ -418,8 +448,8 @@ public abstract class GameScreenObserver extends BaseScreen {
                 public boolean act(float delta) {
 
                     if(!(fixA.split("-")[0].equalsIgnoreCase(fixB.split("-")[0]))){
-                        KnightActor actA = actorMap.get(fixA);
-                        KnightActor actB = actorMap.get(fixB);
+                        ComponentDecorator actA =  actorMap.get(fixA);
+                        ComponentDecorator actB =  actorMap.get(fixB);
 
                         actA.collision(true,actB.getDamage());
                         actA.toggleAttack(true);
@@ -446,8 +476,8 @@ public abstract class GameScreenObserver extends BaseScreen {
                 public boolean act(float delta) {
 
                     if((!fixA.split("-")[0].equalsIgnoreCase(fixB.split("-")[0]))) {
-                        KnightActor actA = actorMap.get(fixA);
-                        KnightActor actB = actorMap.get(fixB);
+                        ComponentDecorator actA =  actorMap.get(fixA);
+                        ComponentDecorator actB =  actorMap.get(fixB);
 
                         actA.collision(false, 0);
                         actA.toggleAttack(false);
@@ -471,7 +501,7 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     }
 
-    public HashMap<String, KnightActor> getActorMap() {
+    public HashMap<String, ComponentDecorator> getActorMap() {
         return actorMap;
     }
 
