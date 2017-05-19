@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.castlewars.CastleWars;
 import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
+import com.castlewars.behavior.Memento.Caretaker;
+import com.castlewars.behavior.Memento.Memento;
 import com.castlewars.creational.factory_chainofresponsability.ActorFactory;
 import com.castlewars.creational.factory_chainofresponsability.DragonFactory;
 import com.castlewars.creational.factory_chainofresponsability.DragonRiderFactory;
@@ -36,6 +38,7 @@ import com.castlewars.structural.Composite.OptionComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 /**
@@ -45,12 +48,15 @@ import java.util.HashMap;
 public abstract class GameScreenObserver extends BaseScreen {
 
     protected Stage stage;
-    private World world;
+
 
     public static FlyweightFactory flyweightFactory;
 
     HashMap<String, KnightActor> superiorActorMap;
     HashMap<String, KnightActor> inferiorActorMap;
+
+    private World world;
+
 
     HashMap<String, KnightActor> actorMap;
 
@@ -63,43 +69,88 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     public ActorFactory factory;
 
+
+    public Memento guardarPartida(){
+        return new Memento(actorMap,"pausa");
+    }
+
+
+
     public GameScreenObserver(final CastleWars game) {
         super(game);
-        stage = new Stage(new FitViewport(360,640));
 
-        
         world = new World(new Vector2(0, 0), true);
         world.setContactListener(new GameContactListener());
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-        inferiorActorMap = new HashMap<String, KnightActor>();
-        superiorActorMap =  new HashMap<String, KnightActor>();
         actorMap  =  new HashMap<String, KnightActor>();
         createFactories();
 
-        CreadorMenu creador= new CreadorMenu();
-        creador.crearMenuOpciones(skin,stage);
+        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        stage = new Stage(new FitViewport(360,640));
+    }
 
-        ArrayList<TextButton> botons1=creador.getBotonesOpciones1();
-        ArrayList<TextButton> botons2=creador.getBotonesOpciones2();
+/*    public void createFactories(){
 
-        final TextButton home1=creador.GetBoton("Home",botons1);
-        final TextButton opciones1=creador.GetBoton("Opciones",botons1);
-        final TextButton poderes1=creador.GetBoton("Poderes",botons1);
-        final TextButton pausar1=creador.GetBoton("Pausar",botons1);
-        final TextButton salir1=creador.GetBoton("Salir",botons1);
-        final TextButton shield1=creador.GetBoton("Escudo",botons1);
-        final TextButton speed1=creador.GetBoton("Velocidad",botons1);
-        final TextButton damage1=creador.GetBoton("Daño",botons1);
+        FlyweightFactory flyweightFactory = new FlyweightFactory();
 
-        final TextButton home2=creador.GetBoton("Home",botons2);
-        final TextButton opciones2=creador.GetBoton("Opciones",botons2);
-        final TextButton poderes2=creador.GetBoton("Poderes",botons2);
-        final TextButton pausar2=creador.GetBoton("Pausar",botons2);
-        final TextButton salir2=creador.GetBoton("Salir",botons2);
-        final TextButton shield2=creador.GetBoton("Escudo",botons2);
-        final TextButton speed2=creador.GetBoton("Velocidad",botons2);
-        final TextButton damage2=creador.GetBoton("Daño",botons2);
+        ActorFactory spikesmansFactory = new SpikesmanFactory(0,world, flyweightFactory);
+        ActorFactory lordFactory = new LordFactory(1,world, flyweightFactory);
+        ActorFactory dragonRiderFactory = new DragonRiderFactory(2,world, flyweightFactory);
+        ActorFactory dragonFactory = new DragonFactory(3.0, world, flyweightFactory);
+
+        spikesmansFactory.setNextFactory(lordFactory);
+        lordFactory.setNextFactory(dragonRiderFactory);
+        dragonRiderFactory.setNextFactory(dragonFactory);
+        dragonFactory.setNextFactory(null);
+
+        factory = spikesmansFactory;
+
+    }*/
+
+    public void setActorMap(HashMap<String, KnightActor> actorMap) {
+        this.actorMap = actorMap;
+        for (HashMap.Entry<String, KnightActor> entry : actorMap.entrySet()) {
+            stage.addActor((KnightActor)entry.getValue());
+        }
+    }
+
+
+
+    public abstract void update();
+
+    @Override
+    public void show() {
+        InputMultiplexer multiplexer = new InputMultiplexer();
+
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(superiorProcessor);
+        multiplexer.addProcessor(inferiorProcessor);
+
+        Gdx.input.setInputProcessor(multiplexer);
+
+        CreadorMenu creador = new CreadorMenu();
+        creador.crearMenuOpciones(skin, stage);
+
+        ArrayList<TextButton> botons1 = creador.getBotonesOpciones1();
+        ArrayList<TextButton> botons2 = creador.getBotonesOpciones2();
+
+        final TextButton home1 = creador.GetBoton("Home", botons1);
+        final TextButton opciones1 = creador.GetBoton("Opciones", botons1);
+        final TextButton poderes1 = creador.GetBoton("Poderes", botons1);
+        final TextButton pausar1 = creador.GetBoton("Pausar", botons1);
+        final TextButton salir1 = creador.GetBoton("Salir", botons1);
+        final TextButton shield1 = creador.GetBoton("Escudo", botons1);
+        final TextButton speed1 = creador.GetBoton("Velocidad", botons1);
+        final TextButton damage1 = creador.GetBoton("Ataque", botons1);
+
+        final TextButton home2 = creador.GetBoton("Home", botons2);
+        final TextButton opciones2 = creador.GetBoton("Opciones", botons2);
+        final TextButton poderes2 = creador.GetBoton("Poderes", botons2);
+        final TextButton pausar2 = creador.GetBoton("Pausar", botons2);
+        final TextButton salir2 = creador.GetBoton("Salir", botons2);
+        final TextButton shield2 = creador.GetBoton("Escudo", botons2);
+        final TextButton speed2 = creador.GetBoton("Velocidad", botons2);
+        final TextButton damage2 = creador.GetBoton("Ataque", botons2);
 
         home1.addCaptureListener(new ChangeListener() {
             @Override
@@ -115,7 +166,6 @@ public abstract class GameScreenObserver extends BaseScreen {
 
                 stage.addActor(opciones1);
                 stage.addActor(poderes1);
-
 
             }
         });
@@ -153,6 +203,20 @@ public abstract class GameScreenObserver extends BaseScreen {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button pausar1");
 
+
+                Memento estado = guardarPartida();
+                care.addMemento(estado);
+
+                game.menuScreen.setCare(care);
+
+                game.setScreen(game.getMenuScreen());
+
+                //game.getScreen().show();
+
+
+                Gdx.app.log("VERF", "memento guardado");
+                Gdx.app.log("VERF", "tamano : " + care.getEstados().size());
+
             }
         });
         salir1.addCaptureListener(new ChangeListener() {
@@ -160,6 +224,7 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button shield1");
+                System.exit(0);
 
             }
         });
@@ -204,8 +269,6 @@ public abstract class GameScreenObserver extends BaseScreen {
                 stage.addActor(opciones2);
                 stage.addActor(poderes2);
 
-
-
             }
         });
 
@@ -216,11 +279,11 @@ public abstract class GameScreenObserver extends BaseScreen {
                 Gdx.app.log("VERF", "button opciones2");
 
                 opciones2.remove();
+
                 poderes2.remove();
 
                 stage.addActor(pausar2);
                 stage.addActor(salir2);
-
             }
         });
         poderes2.addCaptureListener(new ChangeListener() {
@@ -244,6 +307,18 @@ public abstract class GameScreenObserver extends BaseScreen {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button pausar2");
 
+                Memento estado = guardarPartida();
+                care.addMemento(estado);
+
+                game.menuScreen.setCare(care);
+
+                game.setScreen(game.getMenuScreen());
+
+                //game.getScreen().show();
+
+
+                Gdx.app.log("VERF", "memento guardado");
+                Gdx.app.log("VERF", "tamano : " + care.getEstados().size());
             }
         });
         salir2.addCaptureListener(new ChangeListener() {
@@ -251,6 +326,7 @@ public abstract class GameScreenObserver extends BaseScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button salir2");
+                System.exit(0);
 
             }
         });
@@ -279,12 +355,6 @@ public abstract class GameScreenObserver extends BaseScreen {
 
             }
         });
-
-
-
-
-
-
     }
 
     public void createFactories(){
@@ -309,18 +379,6 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     }
 
-    public abstract void update();
-
-    @Override
-    public void show() {
-        InputMultiplexer multiplexer = new InputMultiplexer();
-
-        multiplexer.addProcessor(stage);
-        multiplexer.addProcessor(superiorProcessor);
-        multiplexer.addProcessor(inferiorProcessor);
-
-        Gdx.input.setInputProcessor(multiplexer);
-    }
 
     @Override
     public void hide() {
@@ -410,6 +468,13 @@ public abstract class GameScreenObserver extends BaseScreen {
         public void postSolve(Contact contact, ContactImpulse impulse) {
 
         }
+
     }
+
+    public HashMap<String, KnightActor> getActorMap() {
+        return actorMap;
+    }
+
+
 
 }

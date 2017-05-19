@@ -55,7 +55,7 @@ public abstract class KnightActor extends ComponentDecorator implements Cloneabl
         alive = true;
         attacking = false;
         colliding = false;
-        setSize(PIXELS_IN_METER, PIXELS_IN_METER);
+        setSize(50, 50);
     }
 
     @Override
@@ -105,7 +105,7 @@ public abstract class KnightActor extends ComponentDecorator implements Cloneabl
 
 
         PolygonShape box = new PolygonShape();      // (1) Create the shape.
-        box.setAsBox(0.5f, 0.5f);                   // (2) 1x1 meter box.
+        box.setAsBox(0.2f, 0.2f);                   // (2) 1x1 meter box.
         fixture = body.createFixture(box, 3);       // (3) Create the fixture.
         fixture.setUserData(actorName);              // (4) Set the user data.
         box.dispose();

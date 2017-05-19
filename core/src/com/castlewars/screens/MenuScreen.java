@@ -9,12 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.castlewars.CastleWars;
+import com.castlewars.actors.KnightActor;
+import com.castlewars.behavior.Memento.Caretaker;
+import com.castlewars.behavior.Memento.Memento;
 import com.castlewars.structural.Composite.CreadorMenu;
 import com.castlewars.structural.Composite.MenuComponent;
 import com.castlewars.structural.Composite.OptionComposite;
 import com.castlewars.structural.Composite.OptionLeaf;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 
 /**
@@ -30,6 +36,20 @@ public class MenuScreen extends BaseScreen {
 
     public MenuScreen(final CastleWars game) {
         super(game);
+
+
+
+    }
+
+    @Override
+    public void setCare(Caretaker care) {
+        this.care = care;
+    }
+
+
+    @Override
+    public void show() {
+
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         stage = new Stage(new FitViewport(360,640));
@@ -101,7 +121,9 @@ public class MenuScreen extends BaseScreen {
 
 
                 stage.clear();
+                game.playScreen = new PlayScreen(game);
                 game.setScreen(game.playScreen);
+
             }
         });
 
@@ -111,9 +133,28 @@ public class MenuScreen extends BaseScreen {
                 //game.setScreen(game.creditsScreen);
                 Gdx.app.log("VERF", "button reanudar");
 
-
                 stage.clear();
-                game.setScreen(game.playScreen);
+
+
+                Gdx.app.log("VERF", "tamaño care: "+care.getEstados().size());
+
+                Memento copia= care.getMemento("pausa");
+
+                if (copia==null){
+
+                    //JOptionPane.showMessageDialog(null,"no hay partidas guardadas");
+                    Gdx.app.log("VERF", "no hay partidas guardadas");
+                    game.setScreen(game.getMenuScreen());
+                }else {
+                    game.playScreen.setActorMap(copia.getActorMap());
+
+                    game.setScreen(game.playScreen);
+
+                }
+
+
+
+
             }
         });
 
@@ -138,11 +179,6 @@ public class MenuScreen extends BaseScreen {
                 stage.addActor(home);
             }
         });
-
-    }
-
-    @Override
-    public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
