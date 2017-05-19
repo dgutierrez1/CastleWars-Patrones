@@ -2,31 +2,18 @@ package com.castlewars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.castlewars.CastleWars;
 import com.castlewars.Constants;
 import com.castlewars.actors.KnightActor;
-import com.castlewars.actors.LordActor;
-import com.castlewars.creational.factory_chainofresponsability.ActorFactory;
-import com.castlewars.creational.factory_chainofresponsability.DragonFactory;
-import com.castlewars.creational.factory_chainofresponsability.DragonRiderFactory;
-import com.castlewars.creational.factory_chainofresponsability.LordFactory;
-import com.castlewars.creational.factory_chainofresponsability.SpikesmanFactory;
+
+import com.castlewars.behavior.Memento.Caretaker;
+
 import com.castlewars.processors.InferiorProcessor;
 import com.castlewars.processors.SuperiorProcessor;
-import com.castlewars.structural.Composite.CreadorMenu;
-import com.castlewars.structural.Composite.MenuComponent;
-import com.castlewars.structural.Composite.OptionComposite;
-import com.castlewars.structural.decorator.ActorDecorator;
-import com.castlewars.structural.decorator.DamageDecorator;
-import com.castlewars.structural.decorator.ComponentDecorator;
-import com.castlewars.structural.decorator.ShieldDecorator;
-import com.castlewars.structural.decorator.SpeedDecorator;
+
 
 import java.util.ArrayList;
 
@@ -65,6 +52,11 @@ public class PlayScreen extends GameScreenObserver {
     }
 
     @Override
+    public void setCare(Caretaker care) {
+        this.care=care;
+    }
+
+    @Override
     public void update() {
         superiorPressed = superiorProcessor.getPressed();
         superiorPress = superiorProcessor.getState();
@@ -86,6 +78,9 @@ public class PlayScreen extends GameScreenObserver {
 
                     String strActorKey =  "superior-actor"+actoKeyCounter;
                     KnightActor newActor = factory.createActor(superiorCounter,v , strActorKey);
+
+
+
                     stage.addActor(newActor);
                     actorMap.put(strActorKey,newActor);
 

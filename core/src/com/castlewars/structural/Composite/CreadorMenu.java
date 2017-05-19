@@ -49,12 +49,11 @@ private ArrayList<TextButton> botones;
         menu2.addComponente(menuPoderes2);
         menu2.addComponente(opcionHome2);
 
-
         MenuComponent optionPause1=new OptionLeaf("Pausar",skin);
         MenuComponent optionExit1=new OptionLeaf("Salir",skin);
         MenuComponent optionShield1=new OptionLeaf("Escudo",skin);
         MenuComponent optionSpeed1=new OptionLeaf("Velocidad",skin);
-        MenuComponent optionDamage1=new OptionLeaf("Daño",skin);
+        MenuComponent optionDamage1=new OptionLeaf("Ataque",skin);
 
         menuOpciones1.addComponente(optionPause1);
         menuOpciones1.addComponente(optionExit1);
@@ -67,7 +66,7 @@ private ArrayList<TextButton> botones;
         MenuComponent optionExit2=new OptionLeaf("Salir",skin);
         MenuComponent optionShield2=new OptionLeaf("Escudo",skin);
         MenuComponent optionSpeed2=new OptionLeaf("Velocidad",skin);
-        MenuComponent optionDamage2=new OptionLeaf("Daño",skin);
+        MenuComponent optionDamage2=new OptionLeaf("Ataque",skin);
 
 
         menuOpciones2.addComponente(optionPause2);
@@ -101,6 +100,18 @@ private ArrayList<TextButton> botones;
         TextButton home2=opcionHome2.getButton();
 
 
+        home1.setSize(home1.getWidth(),100);
+        opciones1.setSize(opciones1.getWidth(),100);
+        poderes1.setSize(poderes1.getWidth(),100);
+
+        pausar1.setSize(pausar1.getWidth(),100);
+        salir1.setSize(salir1.getWidth(),100);
+
+        shield1.setSize(shield1.getWidth(),100);
+        speed1.setSize(speed1.getWidth(),100);
+        damage1.setSize(damage1.getWidth(),100);
+
+
         home1.setPosition(0,0);
         opciones1.setPosition(100, 0);
         poderes1.setPosition(200, 0);
@@ -110,8 +121,20 @@ private ArrayList<TextButton> botones;
 
         shield1.setPosition(100, 0);
         speed1.setPosition(200, 0);
-        damage1.setPosition(300, 0);
+        damage1.setPosition(270, 0);
 
+
+
+        home2.setSize(home2.getWidth(),100);
+        opciones2.setSize(opciones2.getWidth(),100);
+        poderes2.setSize(poderes2.getWidth(),100);
+
+        pausar2.setSize(pausar2.getWidth(),100);
+        salir2.setSize(salir2.getWidth(),100);
+
+        shield2.setSize(shield2.getWidth(),100);
+        speed2.setSize(speed2.getWidth(),100);
+        damage2.setSize(damage2.getWidth(),100);
 
         home2.setPosition(0,Constants.HEIGHT-home2.getHeight());
         opciones2.setPosition(100, Constants.HEIGHT-opciones2.getHeight());
@@ -122,7 +145,7 @@ private ArrayList<TextButton> botones;
 
         shield2.setPosition(100, Constants.HEIGHT-shield2.getHeight());
         speed2.setPosition(200, Constants.HEIGHT-speed2.getHeight());
-        damage2.setPosition(300, Constants.HEIGHT-damage2.getHeight());
+        damage2.setPosition(270, Constants.HEIGHT-damage2.getHeight());
 
 
         stage.addActor(opciones1);
@@ -178,6 +201,12 @@ private ArrayList<TextButton> botones;
         credits.setPosition(200, 0);
         home.setPosition(0, 0);
 
+        play.setSize(play.getWidth(),100);
+        credits.setSize(credits.getWidth(),100);
+        home.setSize(home.getWidth(),100);
+
+
+
 
 
         //creacion menu play
@@ -194,6 +223,8 @@ private ArrayList<TextButton> botones;
         nuevo.setPosition(50, 0);
         reanudar.setPosition(200, 0);
 
+        nuevo.setSize(nuevo.getWidth(),100);
+        reanudar.setSize(reanudar.getWidth(),100);
 
 
         //creacion menu creditos
@@ -210,6 +241,8 @@ private ArrayList<TextButton> botones;
         contacto.setPosition(50, 0);
         acercaDe.setPosition(250, 0);
 
+        contacto.setSize(contacto.getWidth(),100);
+        acercaDe.setSize(acercaDe.getWidth(),100);
 
         stage.addActor(play);
         stage.addActor(credits);
