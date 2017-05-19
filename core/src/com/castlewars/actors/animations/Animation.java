@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
  * Created by dagut on 12/02/2017.
  */
 
-public abstract class Animation {
+public class Animation {
     private Array<TextureRegion> frames;
     private float maxFrameTime;
     private float currentFrameTime;
@@ -45,5 +45,11 @@ public abstract class Animation {
 
     public void setFrame(int region){
         frame = region;
+    }
+
+    public void dispose(){
+        for (TextureRegion frame:frames) {
+            frame.getTexture().dispose();
+        }
     }
 }

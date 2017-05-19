@@ -20,8 +20,8 @@ public class DamageDecorator extends ActorDecorator {
 
 
     @Override
-    public double getShield() {
-        return decorable.getShield();
+    public double getHealth() {
+        return decorable.getHealth();
     }
 
 

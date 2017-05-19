@@ -14,17 +14,12 @@ public class DragonRiderFactory extends ActorFactory{
 
     public DragonRiderFactory(double rangeStart, World world, FlyweightFactory flyweightFactory) {
 
-        super(rangeStart,world, flyweightFactory);
-        actorBuilder = new DragonRiderBuilder(world);
+        super(rangeStart,world);
+        actorBuilder = new DragonRiderBuilder(world, flyweightFactory);
     }
 
     @Override
     public void requestBuild(double counter, Vector2 pos, String key) {
-        actorBuilder.buildActor(pos, key);
-        actorBuilder.buildTextures();
-        actorBuilder.buildAnimations();
-        actorBuilder.buildMusic();
-        actorBuilder.buildExtrinsitAtributes((int )counter);
-
+        actorBuilder.buildWithFlyweight(counter, pos, key);
     }
 }

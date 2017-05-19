@@ -1,6 +1,8 @@
 package com.castlewars.structural.flyweight;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.castlewars.actors.KnightActor;
+import com.castlewars.creational.builder.ActorBuilder;
 import com.castlewars.creational.factory_chainofresponsability.ActorFactory;
 import com.castlewars.screens.GameScreenObserver;
 
@@ -15,13 +17,17 @@ public class FlyweightFactory {
     private static final HashMap<String, KnightActor> actorMap = new HashMap();
 
 
-    public KnightActor getActor(String type){
-        KnightActor knight = (KnightActor) actorMap.get(type);
+    public KnightActor getActor(String type, ActorBuilder builder){
+        KnightActor knight =  actorMap.get(type);
 
         if(knight == null){
-            //playScreen.factory.
+            builder.buildActor();
+            builder.buildAnimations();
+            builder.buildMusic();
+            knight = builder.getActor();
+            actorMap.put(type, knight);
         }
-        return null;
+        return (KnightActor) knight.clone();
     }
 
 }

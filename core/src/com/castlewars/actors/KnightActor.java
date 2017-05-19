@@ -1,7 +1,9 @@
 package com.castlewars.actors;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.castlewars.Constants;
+import com.castlewars.actors.animations.Animation;
 import com.castlewars.structural.decorator.ComponentDecorator;
 
 import java.awt.Component;
@@ -20,16 +23,14 @@ import static com.castlewars.Constants.*;
  * Created by Daniel Gutierrez on 7/05/2017.
  */
 
-public abstract class KnightActor extends ComponentDecorator {
+public abstract class KnightActor extends ComponentDecorator implements Cloneable {
 
-    private Texture texture;
-    private Texture attack;
-    private Texture walk;
-    private Texture hit;
-
+    //Atributos para Box2d
     private World world;
     private Body body;
     private Fixture fixture;
+
+    //Atributos de estado del soldado
     private boolean alive;
     private boolean attacking;
     private double health;
@@ -37,31 +38,64 @@ public abstract class KnightActor extends ComponentDecorator {
     private double shield;
     private float speed;
 
+    //Atributos de colision
     private boolean colliding;
     private double damageTaken;
 
+    //Animaciones
+    private Animation animation;
+    private Animation walkAnimation;
+    private Animation attackAnimation;
 
-    private com.castlewars.actors.animations.Animation attackAnimation;
-    private com.castlewars.actors.animations.Animation walkAnimation;
+    //Sound
+    private Sound sound;
 
 
     public KnightActor() {
-
         alive = true;
         attacking = false;
         colliding = false;
-        // Create the player body.
-
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
-
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((body.getPosition().x - 0.5f) * PIXELS_IN_METER,
                 (body.getPosition().y - 0.5f) * PIXELS_IN_METER);
-        batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+        batch.draw(getKnight(), getX(), getY(), getWidth(), getHeight());
     }
+
+    @Override
+    public void act(float delta) {
+        if(colliding){
+            health = health - damageTaken;
+        }
+        if(health <= 0){
+            detach();
+            remove();
+        }else{
+            animation.update(delta);
+            body.setLinearVelocity( 0,speed);
+        }
+    }
+
+    public void detach() {
+        //animation.dispose();
+        //attackAnimation.dispose();
+        //walkAnimation.dispose();
+        //attackAnimation = null;
+        //animation = null;
+        //walkAnimation = null;
+        body.destroyFixture(fixture);
+        world.destroyBody(body);
+    }
+
+    public void setWord(World world) {
+        this.world = world;
+    }
+
+
+
 
     public void setPosition(Vector2 position, String actorName) {
         BodyDef def = new BodyDef();                // (1) Create the body definition.
@@ -77,45 +111,50 @@ public abstract class KnightActor extends ComponentDecorator {
         box.dispose();
     }
 
-    public void setWord(World world) {
-        this.world = world;
+    public void buildExtrinsicAtributtes(double counter,Vector2 position, String actorName ){
+
+        shield = (counter)/10;
+        health = KNIGHT_HEALTH * shield;
+        damage = (KNIGHT_DAMAGE * shield)/KNIGHT_DAMAGE_RATIO;
+        System.out.print("DAMAGE: "+damage);
+
+        setPosition(position, actorName);
+
     }
 
-    public void setTexture(Texture tex){
-        this.texture=tex;
+    public void collision(boolean colliding, double damage) {
+        this.colliding = colliding;
+        this.damageTaken = damage;
+    }
+
+    public void toggleAttack(boolean attacking){
+        if(attacking){
+            animation = attackAnimation;
+            sound.play();
+        }else{
+            animation = walkAnimation;
+        }
     }
 
     public void setSpeed(float speed){
         this.speed = speed;
     }
 
-    @Override
-    public void act(float delta) {
-        if(colliding){
-            health = health - damageTaken;
+    public TextureRegion getKnight() {
+        return animation.getFrame();
+    }
+
+    public Object clone(){
+        Object clone = null;
+
+        try{
+            clone = super.clone();
+        }catch (CloneNotSupportedException e){
+            System.out.print(e.getMessage());
+            e.printStackTrace();
         }
-        if(health <= 0){
-            detach();
-            remove();
-        }else{
-            body.setLinearVelocity( 0,speed);
-        }
+        return clone;
     }
-
-    public void detach() {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
-    }
-    public void buildExtrinsicAtributtes(int counter){
-
-        shield = ((double)counter)/10;
-        health = KNIGHT_HEALTH * shield;
-        damage = (KNIGHT_DAMAGE * shield)/KNIGHT_DAMAGE_RATIO;
-        System.out.print("DAMAGE: "+damage);
-
-    }
-
-    // Getter and setter festival below here.
 
     public boolean isAlive() {
         return alive;
@@ -129,22 +168,45 @@ public abstract class KnightActor extends ComponentDecorator {
         return colliding;
     }
 
-    public void collision(boolean colliding, double damage) {
-        this.colliding = colliding;
-        this.damageTaken = damage;
-    }
-
-    @Override
-    public String mostrarCaracteristicas(){
-        return "ataque :"+getDamage()+" velocidad: "+getSpeed()+" escudo: "+getShield();
-    }
-
     @Override
     public double getDamage() {
         return damage;
     }
 
-    public void setDamage(double damage) {
-        this.damage = damage;
+    public void setWorld(World world) {
+        this.world = world;
     }
+
+    public Animation getWalkAnimation() {
+        return walkAnimation;
+    }
+
+
+    public void setWalkAnimation(Animation walkAnimation) {
+        this.walkAnimation = walkAnimation;
+    }
+
+    public void setAttackAnimation(Animation attackAnimation) {
+        this.attackAnimation = attackAnimation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public void setSound(Sound sound) {
+        this.sound = sound;
+    }
+
+    @Override
+    public double getSpeed() {
+        return speed;
+    }
+
+    @Override
+    public double getHealth() {
+        return health;
+    }
+
+
 }

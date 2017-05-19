@@ -47,6 +47,8 @@ public abstract class GameScreenObserver extends BaseScreen {
     protected Stage stage;
     private World world;
 
+    public static FlyweightFactory flyweightFactory;
+
     HashMap<String, KnightActor> superiorActorMap;
     HashMap<String, KnightActor> inferiorActorMap;
 
@@ -151,7 +153,7 @@ public abstract class GameScreenObserver extends BaseScreen {
 
     public void createFactories(){
 
-        FlyweightFactory flyweightFactory = new FlyweightFactory();
+        flyweightFactory = new FlyweightFactory();
 
         ActorFactory spikesmansFactory = new SpikesmanFactory(0,world, flyweightFactory);
         ActorFactory lordFactory = new LordFactory(1,world, flyweightFactory);
@@ -177,11 +179,6 @@ public abstract class GameScreenObserver extends BaseScreen {
     public void show() {
         InputMultiplexer multiplexer = new InputMultiplexer();
 
-
-
-        //play.setSize(200, 80);
-        //play.setPosition(40, 140);
-        //stage.addActor(play);
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(superiorProcessor);
         multiplexer.addProcessor(inferiorProcessor);
@@ -231,7 +228,10 @@ public abstract class GameScreenObserver extends BaseScreen {
                         KnightActor actB = actorMap.get(fixB);
 
                         actA.collision(true,actB.getDamage());
+                        actA.toggleAttack(true);
                         actB.collision(true,actA.getDamage());
+                        actB.toggleAttack(true);
+
                     }
                     return true;
                 }
@@ -256,7 +256,9 @@ public abstract class GameScreenObserver extends BaseScreen {
                         KnightActor actB = actorMap.get(fixB);
 
                         actA.collision(false, 0);
+                        actA.toggleAttack(false);
                         actB.collision(false, 0);
+                        actB.toggleAttack(false);
                     }
                     return true;
                 }

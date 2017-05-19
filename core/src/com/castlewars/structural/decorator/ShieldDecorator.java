@@ -22,8 +22,8 @@ public class ShieldDecorator extends ActorDecorator {
 
 
     @Override
-    public double getShield() {
-        return decorable.getShield()* Constants.KNIGHT_DECORATOR_SHIELD;
+    public double getHealth() {
+        return decorable.getHealth()* Constants.KNIGHT_DECORATOR_SHIELD;
     }
 
 

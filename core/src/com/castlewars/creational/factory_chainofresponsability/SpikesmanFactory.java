@@ -14,19 +14,12 @@ import com.castlewars.structural.flyweight.FlyweightFactory;
 public class SpikesmanFactory extends ActorFactory {
 
     public SpikesmanFactory(double rangeStart, World world, FlyweightFactory flyweightFactory) {
-        super(rangeStart, world, flyweightFactory);
-        actorBuilder =  new SpikesmanBuilder(world);
+        super(rangeStart, world);
+        actorBuilder =  new SpikesmanBuilder(world, flyweightFactory);
     }
-
-
 
     @Override
     public void requestBuild(double counter, Vector2 pos, String key) {
-        actorBuilder.buildActor(pos, key);
-        actorBuilder.buildTextures();
-        actorBuilder.buildAnimations();
-        actorBuilder.buildMusic();
-        actorBuilder.buildExtrinsitAtributes((int )counter);
-
+        actorBuilder.buildWithFlyweight(counter, pos, key);
     }
 }

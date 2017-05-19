@@ -26,9 +26,5 @@ protected ComponentDecorator decorable;
         this.decorable = decorable;
     }
 
-    @Override
-    public String mostrarCaracteristicas() {
-        return null;
-    }
 
 }

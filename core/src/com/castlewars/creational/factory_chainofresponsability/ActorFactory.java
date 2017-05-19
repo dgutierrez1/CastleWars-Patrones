@@ -23,11 +23,10 @@ public abstract class ActorFactory {
     protected double rangeStart;
     protected  double rangeEnd;
 
-    public ActorFactory(double rangeStart, World world, FlyweightFactory flyweightFactory){
+    public ActorFactory(double rangeStart, World world){
         this.world = world;
         this.rangeStart = rangeStart * Constants.KNIGHT_SELECTION_RATIO;
         this.rangeEnd = (rangeStart + 1) * Constants.KNIGHT_SELECTION_RATIO;
-        this.flyweightFactory = flyweightFactory;
     }
 
 

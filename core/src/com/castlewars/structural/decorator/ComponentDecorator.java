@@ -10,12 +10,7 @@ public abstract class ComponentDecorator extends Actor{
 
     public abstract double getDamage();
     public abstract double getSpeed();
-    public abstract double getShield();
-    public abstract String mostrarCaracteristicas();
-
-
-
-
+    public abstract double getHealth();
 
 
 }
